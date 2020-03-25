@@ -1,14 +1,18 @@
 import requests
+import json
 """
 Sign up for a free trial and generate an API key at pushover.net
 Would have to pay for continued use.
 """
 
 class PushoverNotifier(object):
-    def __init__(self, user_key, api_key, api_url='https://api.pushover.net/1/messages.json'):
-        self.user_key = user_key
-        self.api_key = api_key
-        self.api_url = api_url
+    def __init__(self, config):
+        with open(config, 'r') as f:
+            config_data = json.load(f)
+
+        self.user_key = config_data['user_key']
+        self.api_key = config_data['api_key']
+        self.api_url = config_data['api_url']
     
     def notify(self, message):
         """ POST an HTTPS request to https://api.pushover.net/1/messages.json with the following parameters:

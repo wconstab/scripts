@@ -1,0 +1,5 @@
+{
+    "user_key": "your user key",
+    "api_key": "your api key",
+    "api_url": "https://api.pushover.net/1/messages.json"
+}
