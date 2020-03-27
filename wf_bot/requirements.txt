@@ -1,0 +1,5 @@
+browser_cookie3
+numpy
+requests
+bs4
+pytest

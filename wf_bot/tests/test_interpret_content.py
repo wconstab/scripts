@@ -1,15 +1,15 @@
 import pytest
 import pathlib
 import os
-from ..wf_bot import interpret_content, load_html_file
+from .context import wf_bot
 
 asset_path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'assets')
 
 no_slots_available = ['no_slots_available-20200326-064732.html']
 def test_no_slots_available():
     html_file = os.path.join(asset_path, no_slots_available[0])
-    content = load_html_file(html_file)
-    retry, message = interpret_content(content)
+    content = wf_bot.load_html_file(html_file)
+    retry, message = wf_bot.interpret_content(content)
     assert retry == True
     assert message == "No slots available."
 
@@ -38,8 +38,8 @@ out_of_stock = [('out-of-stock-20200325-164602.html',
 def test_out_of_stock(asset):
 
     html_file = os.path.join(asset_path, asset[0])
-    content = load_html_file(html_file)
-    retry, message = interpret_content(content)
+    content = wf_bot.load_html_file(html_file)
+    retry, message = wf_bot.interpret_content(content)
     assert retry == False
     items = asset[1]
     assert message == "{} items out of stock: {}".format(len(items), items)
