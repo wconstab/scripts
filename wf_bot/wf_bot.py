@@ -5,7 +5,7 @@ import requests
 import time
 from argparse import ArgumentParser
 from bs4 import BeautifulSoup
-from pushover import PushoverNotifier
+from util.pushover import PushoverNotifier
 
 def load_html_file(filename):
     with open(filename, 'r') as f:
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     parser.add_argument("--pushover_config", help="optionally provide json config with user_key and api_key fields for using pushover service.")
     parser.add_argument("--min_delay_minutes", type=int, default=1)
     parser.add_argument("--max_delay_minutes", type=int, default=5)
-    parser.add_argument("--amazon_headers", default="amazon_request_headers.json", help="json formatted request headers for amazon get request.")
+    parser.add_argument("--amazon_headers", default="config/amazon_request_headers.json", help="json formatted request headers for amazon get request.")
     args = parser.parse_args()
 
     if args.pushover_config:
