@@ -5,13 +5,22 @@ from .context import wf_bot
 
 asset_path = os.path.join(pathlib.Path(__file__).parent.absolute(), 'assets')
 
-no_slots_available = ['no_slots_available-20200326-064732.html']
+
+def test_unknown_response():
+    html_file = os.path.join(asset_path, 'unknown-response-20200327-101426.html')
+    content = wf_bot.load_html_file(html_file)
+    retry, message = wf_bot.interpret_content(content)
+    assert retry == False
+    assert message == "Unknown response"
+
+
 def test_no_slots_available():
-    html_file = os.path.join(asset_path, no_slots_available[0])
+    html_file = os.path.join(asset_path, 'no_slots_available-20200326-064732.html')
     content = wf_bot.load_html_file(html_file)
     retry, message = wf_bot.interpret_content(content)
     assert retry == True
     assert message == "No slots available."
+
 
 out_of_stock = [('out-of-stock-20200325-164602.html', 
                  ['Mango Yellow Conventional, 1 Each', 
