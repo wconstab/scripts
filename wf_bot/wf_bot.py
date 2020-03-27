@@ -29,12 +29,12 @@ Probably try pressing this button
 """
 def interpret_content(content):
     soup = BeautifulSoup(content, 'html.parser')
+    retry = False
     if soup.find('div', {'class':'ufss-unavailable'}) is not None:
         message = "No slots available."
         retry = True
     elif soup.find('div', {'class':'ufss-available'}) is not None:
         message = "Hurry, slots available!"
-        retry = False
     elif soup.find(text="We're sorry we are unable to fulfill your entire order."):
         change_q_form = soup.find('form', {'id': 'changeQuantityFormId'})
         item_rows = change_q_form.find_all('div', {'class': ['item-row']})
@@ -44,8 +44,8 @@ def interpret_content(content):
             item_name = text_col.find('p').contents[0]
             items.append(item_name)
         message = "{} items out of stock: {}".format(len(items), items)
-        retry = False
-
+    else:
+        message = "Unknown response"
     return retry, message
 
 if __name__ == "__main__":
